@@ -20,7 +20,7 @@ function removeMin(toSort,newList) {
         }
     }
     if(argmin==-1) {
-        return -1;
+        return null;
     }
     r=toSort[argmin].shift();
     newList.push(r);
@@ -50,7 +50,12 @@ do{
     for (var i =0; i < runs[level].length; i+=nOfBufferFrames-1){
         sublistsToSort=runs[level].slice(i,i+nOfBufferFrames-1);
         
-        removeMin(sublistsToSort)
+        newList=[]
+        do{
+            res=removeMin(sublistsToSort,newList);
+        }while(res!=null);
+        
+        runs[level+1].push(newList);
 
     }
 
