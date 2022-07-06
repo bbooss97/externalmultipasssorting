@@ -103,12 +103,12 @@ while True:
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
         newList=myList([])
-        print("those are the lists to sort: "+str(sublistsToSort))
+        print("those are the lists to sort: \n"+str(sublistsToSort))
         while True:
             res=removeMin(sublistsToSort,newList)
             if res==None:
                 conta+=1
-                print("this is the sorted list n "+str(conta)+" "+str(newList)+"\033[J")
+                print("this is the sorted list n "+str(conta)+" "+str(newList)+"\n\033[J")
                 break
         runs[level+1].append(newList)
     level+=1
