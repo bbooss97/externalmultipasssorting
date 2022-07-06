@@ -2,15 +2,38 @@ import time
 import random
 import sys
 import os
-nOfPages=30
-nOfBufferFrames=5
+nOfPages=10
+nOfBufferFrames=3
 nOfElementsInAPage=2
 rangeOfValues=100
+
+#insert nOfPages
+nOfPages=int(input("insert nOfPages: "))
+#insert nOfBufferFrames
+nOfBufferFrames=int(input("insert nOfBufferFrames: "))
+#insert nOfElementsInAPage
+nOfElementsInAPage=int(input("insert nOfElementsInAPage: "))
+#insert rangeOfValues
+rangeOfValues=int(input("insert rangeOfValues: "))
+
 print("number of pages: "+str(nOfPages))
 print("number of buffer frames: "+str(nOfBufferFrames))
 print("number of elements in a page: "+str(nOfElementsInAPage))
 print("range of values: "+str(rangeOfValues))
 print()
+
+class myList(list):
+    def __str__(self):
+        lista=list(self)
+        r="["
+        for i,l in enumerate(lista):
+            if(i%(nOfElementsInAPage)==0 and i!=0):
+                r+="| "
+            r+=str(l)+", "
+        if len(r)>1:
+            r=r[0:-2]        
+        r+="]"
+        return r
 
 def clearConsole():
     if os.name == 'nt':
@@ -42,8 +65,8 @@ def removeMin(toSort,newList):
     newList.append(r)
     return r
 
-runs=[[]]
-listOfNumbers=[]
+runs=[myList([])]
+listOfNumbers=myList([])
 for i in range(0,nOfPages*nOfElementsInAPage):
     listOfNumbers.append(random.randint(0,rangeOfValues))
 print("this is the initial list: "+str(listOfNumbers))
@@ -51,7 +74,7 @@ print("\n")
 input()
 
 for i in range(0,len(listOfNumbers),nOfBufferFrames*nOfElementsInAPage):
-    l=listOfNumbers[i:i+nOfBufferFrames*nOfElementsInAPage]
+    l=myList(listOfNumbers[i:i+nOfBufferFrames*nOfElementsInAPage])
     print("elements in list n "+str(int(i/(nOfBufferFrames*nOfElementsInAPage))))
     print(l)
     l.sort()
@@ -70,10 +93,10 @@ for i,l in enumerate(runs[0]):
 
 level=0
 while True:
-    runs.append([])
+    runs.append(myList([]))
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
-        newList=[]
+        newList=myList([])
         while True:
             res=removeMin(sublistsToSort,newList)
             if res==None:
