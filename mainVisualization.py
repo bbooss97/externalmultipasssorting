@@ -48,11 +48,17 @@ def removeMin(toSort,newList):
     minimum=rangeOfValues+1
     argmin=-1
     input()
+    print("\033[J",end="")
     print("those are the lists: ")
     for i,l in enumerate(toSort):
         print("list "+str(i)+": "+str(l))
     print("this is the newlist : ")
     print(newList)
+    goBack="\033[A"*(len(toSort)+4)+"\033[F"
+    print(goBack)
+
+    # for i in range(len(toSort)+3):
+    #     print ("\033[A\033[A") 
     for i in range(len(toSort)):
         if len(toSort[i])==0:
             continue
@@ -70,7 +76,6 @@ listOfNumbers=myList([])
 for i in range(0,nOfPages*nOfElementsInAPage):
     listOfNumbers.append(random.randint(0,rangeOfValues))
 print("this is the initial list: "+str(listOfNumbers))
-print("\n")
 input()
 
 for i in range(0,len(listOfNumbers),nOfBufferFrames*nOfElementsInAPage):
@@ -94,12 +99,16 @@ for i,l in enumerate(runs[0]):
 level=0
 while True:
     runs.append(myList([]))
+    conta=0
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
         newList=myList([])
+        print("those are the lists to sort: \n"+str(sublistsToSort))
         while True:
             res=removeMin(sublistsToSort,newList)
             if res==None:
+                conta+=1
+                print("this is the sorted list n "+str(conta)+" "+str(newList)+"\n\033[J")
                 break
         runs[level+1].append(newList)
     level+=1
