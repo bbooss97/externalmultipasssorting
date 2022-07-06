@@ -49,16 +49,13 @@ def removeMin(toSort,newList):
     argmin=-1
     input()
     print("\033[J",end="")
-    print("those are the lists: ")
+    print("those are the current lists to sort: ")
     for i,l in enumerate(toSort):
         print("list "+str(i)+": "+str(l))
-    print("this is the newlist : ")
+    print("this is the newlist being produced: ")
     print(newList)
     goBack="\033[A"*(len(toSort)+4)+"\033[F"
     print(goBack)
-
-    # for i in range(len(toSort)+3):
-    #     print ("\033[A\033[A") 
     for i in range(len(toSort)):
         if len(toSort[i])==0:
             continue
@@ -80,18 +77,18 @@ input()
 
 for i in range(0,len(listOfNumbers),nOfBufferFrames*nOfElementsInAPage):
     l=myList(listOfNumbers[i:i+nOfBufferFrames*nOfElementsInAPage])
-    print("elements in list n "+str(int(i/(nOfBufferFrames*nOfElementsInAPage))))
+    print("load in the buffer frames the  n "+str(int(i/(nOfBufferFrames*nOfElementsInAPage)))+" part of the list")
     print(l)
     l.sort()
     input()
-    print("sorted list n "+str(int(i/(nOfBufferFrames*nOfElementsInAPage))))
+    print("i sort the "+str(int(i/(nOfBufferFrames*nOfElementsInAPage)))+" part of the list in the buffer frames and i write it in the second storage") 
     print(l)
     print("\n")
     input()
     runs[0].append(l)
 #print("those are the sorted lists: "+str(runs[0]))
 
-print("those are the sorted lists: ")
+print("those are the sorted lists written in the second storage: ")
 for i,l in enumerate(runs[0]):
     print("list "+str(i)+": "+str(l))
 
@@ -103,12 +100,12 @@ while True:
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
         newList=myList([])
-        print("those are the lists to sort: \n"+str(sublistsToSort))
+        print("we are in the "+str(level)+" pass of the algorithm and those are the current lists to sort: \n"+str(sublistsToSort))
         while True:
             res=removeMin(sublistsToSort,newList)
             if res==None:
                 conta+=1
-                print("this is the sorted list n "+str(conta)+" "+str(newList)+"\n\033[J")
+                print("this is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
                 break
         runs[level+1].append(newList)
     level+=1
