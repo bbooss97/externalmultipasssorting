@@ -6,6 +6,16 @@ nOfPages=10
 nOfBufferFrames=3
 nOfElementsInAPage=2
 rangeOfValues=100
+
+#insert nOfPages
+nOfPages=int(input("insert nOfPages: "))
+#insert nOfBufferFrames
+nOfBufferFrames=int(input("insert nOfBufferFrames: "))
+#insert nOfElementsInAPage
+nOfElementsInAPage=int(input("insert nOfElementsInAPage: "))
+#insert rangeOfValues
+rangeOfValues=int(input("insert rangeOfValues: "))
+
 print("number of pages: "+str(nOfPages))
 print("number of buffer frames: "+str(nOfBufferFrames))
 print("number of elements in a page: "+str(nOfElementsInAPage))
@@ -38,11 +48,17 @@ def removeMin(toSort,newList):
     minimum=rangeOfValues+1
     argmin=-1
     input()
+    print("\033[J",end="")
     print("those are the lists: ")
     for i,l in enumerate(toSort):
         print("list "+str(i)+": "+str(l))
     print("this is the newlist : ")
     print(newList)
+    goBack="\033[A"*(len(toSort)+4)+"\033[F"
+    print(goBack)
+
+    # for i in range(len(toSort)+3):
+    #     print ("\033[A\033[A") 
     for i in range(len(toSort)):
         if len(toSort[i])==0:
             continue
@@ -60,7 +76,6 @@ listOfNumbers=myList([])
 for i in range(0,nOfPages*nOfElementsInAPage):
     listOfNumbers.append(random.randint(0,rangeOfValues))
 print("this is the initial list: "+str(listOfNumbers))
-print("\n")
 input()
 
 for i in range(0,len(listOfNumbers),nOfBufferFrames*nOfElementsInAPage):
@@ -84,12 +99,16 @@ for i,l in enumerate(runs[0]):
 level=0
 while True:
     runs.append(myList([]))
+    conta=0
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
         newList=myList([])
+        print("those are the lists to sort: "+str(sublistsToSort))
         while True:
             res=removeMin(sublistsToSort,newList)
             if res==None:
+                conta+=1
+                print("this is the sorted list n "+str(conta)+" "+str(newList)+"\033[J")
                 break
         runs[level+1].append(newList)
     level+=1
