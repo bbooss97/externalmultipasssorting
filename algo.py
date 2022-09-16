@@ -17,9 +17,10 @@ nOfElementsInAPage=int(input("insert nOfElementsInAPage: "))
 rangeOfValues=int(input("insert rangeOfValues: "))
 
 if nOfBufferFrames < 3 :
+    print("nOfBufferFrames must be greater than 2 i changed the nOfBufferFrames to 3")
     nOfBufferFrames = 3
 
-os.system("clear")
+os.system("cls")
 
 print("number of pages: "+str(nOfPages))
 print("number of buffer frames: "+str(nOfBufferFrames))
@@ -44,18 +45,15 @@ def removeMin(toSort,newList):
     minimum=rangeOfValues+1
     argmin=-1
     input()
-    os.system("clear")            #print("\033[J",end="")
+    os.system("cls")            
     print("those are the current lists to sort: ")
     for i,l in enumerate(toSort):
         print("list "+str(i)+": "+str(l))
     print("this is the newlist being produced: ")
     print(newList)
-    #print(len(str(newList)))
     conta=0
     for j in toSort:
         conta += int(len(str(j))/192)
-    #goBack="\033[A"*(len(toSort)+4)+"\033[F"  #+int(len(newList)/48)                      +int(len(str(newList))/192)+conta)
-    #print(goBack)
     for i in range(len(toSort)):
         if len(toSort[i])==0:
             continue
@@ -86,7 +84,6 @@ for i in range(0,len(listOfNumbers),nOfBufferFrames*nOfElementsInAPage):
     print("\n")
     input()
     runs[0].append(l)
-#print("those are the sorted lists: "+str(runs[0]))
 
 print("those are the sorted lists written in the second storage: ")
 for i,l in enumerate(runs[0]):
@@ -118,7 +115,7 @@ while True:
         break
 
 input()
-os.system("clear")
+os.system("cls")
 sortedList=runs[len(runs)-1]
 print("\nfinal sorted list")
 print(sortedList)
