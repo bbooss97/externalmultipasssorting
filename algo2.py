@@ -42,18 +42,17 @@ class myList(list):
         r+="]"
         return r
 
-def removeMin(toSort,newList,removed):
+def removeMin(toSort,newList,removed,originalList):
     minimum=rangeOfValues+1
     argmin=-1
     input()
     os.system("cls")            
     print("those are the current lists to sort: ")
-    
     for i,l in enumerate(toSort):
-        
-        print("list "+str(i)+": "+str(l))
-        # print("list "+str(i)+": "+str(l[0:nOfElementsInAPage-1-removed[i]%nOfElementsInAPage+1]))
-        # print()
+        print("list "+str(i)+": "+str(originalList))
+    print()
+    for i,l in enumerate(toSort):
+        print("buffer queue"+str(i)+": "+str(l))
     print()
     for i,l in enumerate(toSort):
         print("buffer "+str(i)+": "+str(l[0:nOfElementsInAPage-1-removed[i]%nOfElementsInAPage+1]))
@@ -136,7 +135,7 @@ while True:
         removed=[0 for _ in listespalmate]
         listespalmate=[myList(i) for i in listespalmate]
         while True:
-            res=removeMin(listespalmate,newList,removed)
+            res=removeMin(listespalmate,newList,removed,sublistsToPrint)
             if res==None:
                 conta+=1
                 print("\nthis is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
