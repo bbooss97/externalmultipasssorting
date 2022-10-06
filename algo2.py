@@ -126,7 +126,9 @@ while True:
         newList=myList([])
         
         if len(sublistsToPrint) == 1:
-            print("there is one only list left to sort so we skip the sort and write it directly in secondary storage")
+            input()
+            os.system("cls")
+            print("\nthere is one only list left to sort so we skip the sort and write it directly in secondary storage")
             runs[level+1].append(sublistsToPrint[0])
             continue
 
@@ -137,7 +139,7 @@ while True:
             res=removeMin(listespalmate,newList,removed)
             if res==None:
                 conta+=1
-                print("this is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
+                print("\nthis is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
                 break
         runs[level+1].append(newList)
     level+=1
