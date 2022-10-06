@@ -29,11 +29,12 @@ print("range of values: "+str(rangeOfValues))
 print()
 
 class myList(list):
+    quanti=0
     def __str__(self):
         lista=list(self)
         r="["
         for i,l in enumerate(lista):
-            if(i%(nOfElementsInAPage)==0 and i!=0):
+            if((i+self.quanti)%(nOfElementsInAPage)==0 and i!=0):
                 r+="| "
             r+=str(l)+", "
         if len(r)>1:
@@ -41,14 +42,21 @@ class myList(list):
         r+="]"
         return r
 
-def removeMin(toSort,newList):
+def removeMin(toSort,newList,removed):
     minimum=rangeOfValues+1
     argmin=-1
     input()
     os.system("cls")            
     print("those are the current lists to sort: ")
+    
     for i,l in enumerate(toSort):
+        
         print("list "+str(i)+": "+str(l))
+        # print("list "+str(i)+": "+str(l[0:nOfElementsInAPage-1-removed[i]%nOfElementsInAPage+1]))
+        # print()
+    print()
+    for i,l in enumerate(toSort):
+        print("buffer "+str(i)+": "+str(l[0:nOfElementsInAPage-1-removed[i]%nOfElementsInAPage+1]))
     print("this is the newlist being produced: ")
     print(newList)
     conta=0
@@ -63,6 +71,8 @@ def removeMin(toSort,newList):
     if argmin==-1:
         return None
     r=toSort[argmin].pop(0)
+    removed[argmin]+=1
+    toSort[argmin].quanti+=1
     newList.append(r)
     return r
 
@@ -94,10 +104,12 @@ while True:
     runs.append(myList([]))
     conta=0
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
+
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
+        sublistsToPrint=sublistsToSort.copy()
+        lenghtOfSublitstsToSort=len(sublistsToSort)
 
-
-        listespalmate=[[] for y in range(nOfBufferFrames-1)]
+        listespalmate=[myList([]) for y in range(nOfBufferFrames-1)]
         index=0
         while True:
             variabile=0
@@ -105,22 +117,24 @@ while True:
                 if len(sublistsToSort[j])==0:
                     variabile+=1
                     continue
-                listespalmate[index].append(sublistsToSort[j][0:nOfElementsInAPage])
+                listespalmate[index]=listespalmate[index]+sublistsToSort[j][0:nOfElementsInAPage]
                 sublistsToSort[j]=sublistsToSort[j][nOfElementsInAPage:]
                 index= (index+1)%(nOfBufferFrames-1)
-            if variabile==len(sublistsToSort)-1:
+            if variabile==(lenghtOfSublitstsToSort):
                 break
 
         newList=myList([])
         
-        if len(sublistsToSort) == 1:
+        if len(sublistsToPrint) == 1:
             print("there is one only list left to sort so we skip the sort and write it directly in secondary storage")
-            runs[level+1].append(sublistsToSort[0])
+            runs[level+1].append(sublistsToPrint[0])
             continue
 
-        print("we are in the "+str(level)+" pass of the algorithm and those are the current lists to sort: \n"+str(sublistsToSort))
+        print("we are in the "+str(level)+" pass of the algorithm and those are the current lists to sort: \n"+str(sublistsToPrint))
+        removed=[0 for _ in listespalmate]
+        listespalmate=[myList(i) for i in listespalmate]
         while True:
-            res=removeMin(sublistsToSort,newList)
+            res=removeMin(listespalmate,newList,removed)
             if res==None:
                 conta+=1
                 print("this is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
