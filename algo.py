@@ -29,26 +29,35 @@ print("range of values: "+str(rangeOfValues))
 print()
 
 class myList(list):
+    quanti=0
     def __str__(self):
         lista=list(self)
         r="["
         for i,l in enumerate(lista):
-            if(i%(nOfElementsInAPage)==0 and i!=0):
+            if((i+self.quanti)%(nOfElementsInAPage)==0 and i!=0):
                 r+="| "
             r+=str(l)+", "
         if len(r)>1:
             r=r[0:-2]        
         r+="]"
         return r
+    def tolist(self):
+        return self.lista[:]
 
-def removeMin(toSort,newList):
+def removeMin(toSort,newList,removed,originalList):
     minimum=rangeOfValues+1
     argmin=-1
     input()
     os.system("cls")            
     print("those are the current lists to sort: ")
-    for i,l in enumerate(toSort):
+    for i,l in enumerate(originalList):
         print("list "+str(i)+": "+str(l))
+    print()
+    for i,l in enumerate(toSort):
+        print("buffer queue"+str(i)+": "+str(l))
+    print()
+    for i,l in enumerate(toSort):
+        print("buffer "+str(i)+": "+str(l[0:nOfElementsInAPage-1-removed[i]%nOfElementsInAPage+1]))
     print("this is the newlist being produced: ")
     print(newList)
     conta=0
@@ -63,6 +72,8 @@ def removeMin(toSort,newList):
     if argmin==-1:
         return None
     r=toSort[argmin].pop(0)
+    removed[argmin]+=1
+    toSort[argmin].quanti+=1
     newList.append(r)
     return r
 
@@ -94,20 +105,26 @@ while True:
     runs.append(myList([]))
     conta=0
     for i in range(0,len(runs[level]),nOfBufferFrames-1):
+
         sublistsToSort=runs[level][i:i+nOfBufferFrames-1]
+
         newList=myList([])
         
         if len(sublistsToSort) == 1:
-            print("there is one only list left to sort so we skip the sort and write it directly in secondary storage")
+            input()
+            os.system("cls")
+            print("\nthere is one only list left to sort so we skip the sort and write it directly in secondary storage")
             runs[level+1].append(sublistsToSort[0])
             continue
 
         print("we are in the "+str(level)+" pass of the algorithm and those are the current lists to sort: \n"+str(sublistsToSort))
+        removed=[0 for _ in sublistsToSort]
+        sublistsToPrint=[t.copy() for t in sublistsToSort]
         while True:
-            res=removeMin(sublistsToSort,newList)
+            res=removeMin(sublistsToSort,newList,removed,sublistsToPrint)
             if res==None:
                 conta+=1
-                print("this is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
+                print("\nthis is the produced sorted list n "+str(conta)+" "+str(newList)+" that will be written in the second storage\033[J")
                 break
         runs[level+1].append(newList)
     level+=1
