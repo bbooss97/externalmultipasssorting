@@ -48,8 +48,8 @@ def removeMin(toSort,newList,removed,originalList):
     input()
     os.system("cls")            
     print("those are the current lists to sort: ")
-    for i,l in enumerate(toSort):
-        print("list "+str(i)+": "+str(originalList))
+    for i,l in enumerate(originalList):
+        print("list "+str(i)+": "+str(l))
     print()
     for i,l in enumerate(toSort):
         print("buffer queue"+str(i)+": "+str(l))
